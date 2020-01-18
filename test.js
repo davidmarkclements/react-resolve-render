@@ -9,7 +9,7 @@ test('render', async ({ is }) => {
   var renderCount = 0
   const test = createElement(() => {
     renderCount++
-    return createElement('div', null, 
+    return createElement('div', null,
       createElement('span', null, 'count:' + count)
     )
   })

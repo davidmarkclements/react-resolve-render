@@ -3,28 +3,28 @@ const { renderToString } = loadReactDomServer()
 const { promisify } = require('util')
 const timeout = promisify(setTimeout)
 
-async function render  (element, opts = { tick: 75, max: 10, logger: console }) {
+async function render (element, opts = { tick: 75, max: 10, logger: console }) {
   const { tick = 75, max = 10, logger = console } = opts
   let str = ''
   let nextStr = ''
   let loop = max < 0 ? 0 : max
-  try { 
-    do { 
+  try {
+    do {
       str = renderToString(element)
       if (nextStr === str) return str
       await timeout(tick)
       nextStr = renderToString(element)
       if (nextStr === str) return str
-    } while (loop--)          
+    } while (loop--)
   } catch (err) {
-    err.message = 'react-resolve-render: ' + err.message, 
+    err.message = 'react-resolve-render: ' + err.message
     logger.error(err)
     return str
-  } 
+  }
 }
 
 function loadReactDomServer () {
-  try { 
+  try {
     return require('react-dom/server')
   } catch (err) {
     throw Error(
